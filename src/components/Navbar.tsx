@@ -9,9 +9,13 @@ interface NavbarProps {
 
 const navLinks = [
   { to: "/", label: "Home" },
+  { to: "/dashboard", label: "Dashboard" },
   { to: "/map", label: "Map" },
   { to: "/facilities", label: "Facilities" },
   { to: "/events", label: "Events" },
+  { to: "/profile", label: "Profile" },
+  { to: "/notifications", label: "Notifications" },
+  { to: "/issues", label: "Issues" },
 ];
 
 const Navbar = ({ darkMode, toggleDarkMode }: NavbarProps) => {
@@ -35,15 +39,23 @@ const Navbar = ({ darkMode, toggleDarkMode }: NavbarProps) => {
 
           {/* Desktop Nav */}
           <div className="hidden md:flex items-center gap-1">
-            {navLinks.map((l) => (
+            {navLinks.map((l, idx) => (
               <Link
                 key={l.to}
                 to={l.to}
-                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 ${
                   location.pathname === l.to
                     ? "bg-primary text-primary-foreground"
                     : "text-muted-foreground hover:text-foreground hover:bg-accent"
                 }`}
+                aria-current={location.pathname === l.to ? 'page' : undefined}
+                tabIndex={0}
+                aria-label={l.label}
+                onKeyDown={e => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    (e.target as HTMLElement).click();
+                  }
+                }}
               >
                 {l.label}
               </Link>
@@ -53,14 +65,19 @@ const Navbar = ({ darkMode, toggleDarkMode }: NavbarProps) => {
           <div className="flex items-center gap-2">
             <button
               onClick={toggleDarkMode}
-              className="p-2 rounded-lg hover:bg-accent transition-colors text-muted-foreground hover:text-foreground"
+              className="p-2 rounded-lg hover:bg-accent transition-colors text-muted-foreground hover:text-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
               aria-label="Toggle theme"
+              tabIndex={0}
+              onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { toggleDarkMode(); } }}
             >
               {darkMode ? <Sun size={18} /> : <Moon size={18} />}
             </button>
             <button
-              className="md:hidden p-2 rounded-lg hover:bg-accent transition-colors text-muted-foreground"
+              className="md:hidden p-2 rounded-lg hover:bg-accent transition-colors text-muted-foreground focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/60"
               onClick={() => setMobileOpen(!mobileOpen)}
+              aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+              tabIndex={0}
+              onKeyDown={e => { if (e.key === 'Enter' || e.key === ' ') { setMobileOpen(!mobileOpen); } }}
             >
               {mobileOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
@@ -71,16 +88,24 @@ const Navbar = ({ darkMode, toggleDarkMode }: NavbarProps) => {
       {/* Mobile Menu */}
       {mobileOpen && (
         <div className="md:hidden border-t border-border px-4 pb-4 pt-2 space-y-1">
-          {navLinks.map((l) => (
+          {navLinks.map((l, idx) => (
             <Link
               key={l.to}
               to={l.to}
               onClick={() => setMobileOpen(false)}
-              className={`block px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${
+              className={`block px-4 py-2.5 rounded-lg text-sm font-medium transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 ${
                 location.pathname === l.to
                   ? "bg-primary text-primary-foreground"
                   : "text-muted-foreground hover:text-foreground hover:bg-accent"
               }`}
+              aria-current={location.pathname === l.to ? 'page' : undefined}
+              tabIndex={0}
+              aria-label={l.label}
+              onKeyDown={e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  (e.target as HTMLElement).click();
+                }
+              }}
             >
               {l.label}
             </Link>
