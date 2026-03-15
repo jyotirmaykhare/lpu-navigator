@@ -42,7 +42,17 @@ let events = [
   { name: 'Tech Fest', description: 'Annual technology festival.', date: '2026-03-20' },
 ];
 
-// Campus locations data
+// Facilities data
+let facilities = [
+  { id: 1, name: 'Central Library', description: 'Central library with 50,000+ books and digital resources', icon: 'library' },
+  { id: 2, name: 'Computer Labs', description: 'State-of-the-art labs with high-speed internet', icon: 'labs' },
+  { id: 3, name: 'Cafeteria', description: 'Multiple food courts and dining options across campus', icon: 'cafeteria' },
+  { id: 4, name: 'Sports Complex', description: 'Olympic-size pool, gym, and indoor sports facilities', icon: 'sports' },
+  { id: 5, name: 'Admin Block', description: 'Registrar, admissions, and administrative offices', icon: 'admin' },
+  { id: 6, name: 'Auditorium', description: 'Shanti Devi Mittal Auditorium for events and seminars', icon: 'auditorium' },
+];
+
+// Campus locations data (static base points)
 const campusLocations = [
   {
     name: "Main Gate",
@@ -141,6 +151,15 @@ const campusLocations = [
   },
 ];
 
+// In-memory live locations derived from campusLocations
+let liveLocations = campusLocations.map((loc, idx) => ({
+  id: idx + 1,
+  name: loc.name,
+  // start from same position, will jitter slightly on each request
+  position: [...loc.position],
+  type: 'live',
+}));
+
 // API endpoints
 app.get('/api/user', (req, res) => res.json(user));
 app.get('/api/notifications', (req, res) => res.json(notifications));
@@ -154,9 +173,26 @@ app.post('/api/issues', (req, res) => {
 app.get('/api/messages', (req, res) => res.json(messages));
 app.get('/api/announcements', (req, res) => res.json(announcements));
 app.get('/api/events', (req, res) => res.json(events));
+app.get('/api/facilities', (req, res) => res.json(facilities));
 
-// New endpoint for campus locations
+// Static campus locations
 app.get('/api/locations', (req, res) => res.json(campusLocations));
+
+// Live locations (simulated small movement around base points)
+app.get('/api/live-locations', (req, res) => {
+  liveLocations = liveLocations.map((loc, idx) => {
+    const base = campusLocations[idx] || loc;
+    const [lat, lng] = base.position;
+    // jitter within ~50m
+    const jitterLat = (Math.random() - 0.5) * 0.0005;
+    const jitterLng = (Math.random() - 0.5) * 0.0005;
+    return {
+      ...loc,
+      position: [lat + jitterLat, lng + jitterLng],
+    };
+  });
+  res.json(liveLocations);
+});
 
 app.listen(PORT, () => {
   console.log(`Mock API server running at http://localhost:${PORT}`);

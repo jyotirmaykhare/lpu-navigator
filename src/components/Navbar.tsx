@@ -9,7 +9,7 @@ interface NavbarProps {
 
 const navLinks = [
   { to: "/", label: "Home" },
-  { to: "/dashboard", label: "Dashboard" },
+  { to: "/social", label: "Dashboard" },
   { to: "/map", label: "Map" },
   { to: "/facilities", label: "Facilities" },
   { to: "/events", label: "Events" },

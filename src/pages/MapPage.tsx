@@ -1,8 +1,6 @@
 
 import React, { useState } from "react";
 import CampusMap from "@/components/CampusMap";
-import ARCampus3D from "@/components/ARCampus3D";
-import MapCluster from "@/components/MapCluster";
 import { Search } from "lucide-react";
 
 
@@ -16,6 +14,7 @@ const MapPage = () => {
   const [showRoute, setShowRoute] = useState(false);
   const [liveUpdate, setLiveUpdate] = useState(true);
   const [locations, setLocations] = useState([]);
+  const [liveLocations, setLiveLocations] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [routeHistory, setRouteHistory] = useState(() => {
@@ -56,6 +55,29 @@ const MapPage = () => {
         setError("Could not load campus locations");
         setLoading(false);
       });
+  }, []);
+
+  // Poll live locations for moving markers
+  React.useEffect(() => {
+    let intervalId: number | undefined;
+    const fetchLive = () => {
+      fetch("http://localhost:4000/api/live-locations")
+        .then((res) => {
+          if (!res.ok) throw new Error("Failed to fetch live locations");
+          return res.json();
+        })
+        .then((data) => {
+          setLiveLocations(data);
+        })
+        .catch(() => {
+          // ignore live errors for now, keep base map working
+        });
+    };
+    fetchLive();
+    intervalId = window.setInterval(fetchLive, 5000);
+    return () => {
+      if (intervalId) window.clearInterval(intervalId);
+    };
   }, []);
 
   return (
@@ -212,14 +234,14 @@ const MapPage = () => {
           </div>
         </form>
       </div>
-      {/* AR/3D Campus View */}
-      <ARCampus3D />
-      <CampusMap from={showRoute ? from : ""} to={showRoute ? to : ""} stops={stops} locations={locations} />
-      {/* Clustered map demo below */}
-      <div className="mt-8">
-        <h2 className="text-lg font-bold mb-2">All Campus Locations (Clustered)</h2>
-        <MapCluster locations={locations} />
-      </div>
+      <CampusMap
+        from={showRoute ? from : ""}
+        to={showRoute ? to : ""}
+        stops={stops}
+        locations={locations}
+        liveLocations={liveLocations}
+      />
+
     </main>
   );
 };

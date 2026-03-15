@@ -5,17 +5,19 @@ import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Chatbot from "@/components/Chatbot";
 
-
 import Index from "./pages/Index";
 import MapPage from "./pages/MapPage";
 import Facilities from "./pages/Facilities";
 import NotFound from "./pages/NotFound";
 import Notifications from "./pages/Notifications";
 import Issues from "./pages/Issues";
+import Events from "./pages/Events";
+import Dashboard from "./pages/Dashboard";
+import UserProfile from "./pages/UserProfile";
+
+const queryClient = new QueryClient();
 
 const App = () => {
-  useRealTimeEventNotifications();
-  useNotificationPolling();
   const [darkMode, setDarkMode] = useState(() => {
     if (typeof window !== "undefined") {
       return localStorage.getItem("theme") === "dark";
@@ -31,7 +33,6 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <Sonner />
         <BrowserRouter>
           <Navbar darkMode={darkMode} toggleDarkMode={() => setDarkMode(!darkMode)} />
           <Routes>
@@ -39,8 +40,10 @@ const App = () => {
             <Route path="/map" element={<MapPage />} />
             <Route path="/facilities" element={<Facilities />} />
             <Route path="/events" element={<Events />} />
-            <Route path="/social" element={<SocialDashboard />} />
-
+            <Route path="/notifications" element={<Notifications />} />
+            <Route path="/issues" element={<Issues />} />
+            <Route path="/social" element={<Dashboard />} />
+            <Route path="/profile" element={<UserProfile />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
           <Chatbot />
@@ -51,5 +54,3 @@ const App = () => {
 };
 
 export default App;
-
-            <Route path="/map" element={<MapPage />} />

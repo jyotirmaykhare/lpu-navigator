@@ -119,6 +119,11 @@ type CampusMapProps = {
     image?: string;
     type?: string; // e.g., 'gate', 'hostel', 'academic', etc.
   }>;
+  liveLocations?: Array<{
+    id: number;
+    name: string;
+    position: [number, number];
+  }>;
 };
 
 // Fix marker icon issue in Vite
@@ -138,7 +143,7 @@ const center: [number, number] = [31.2536, 75.7033];
 
 
 
-const CampusMap = ({ from, to, locations }: CampusMapProps) => {
+const CampusMap = ({ from, to, locations, liveLocations = [] }: CampusMapProps) => {
   const [directions, setDirections] = useState<string[]>([]);
   const [userLocation, setUserLocation] = useState<[number, number] | null>(null);
   const [startPos, setStartPos] = useState<[number, number] | null>(null);
@@ -322,6 +327,23 @@ const CampusMap = ({ from, to, locations }: CampusMapProps) => {
             )}
           </Marker>
         ))}
+
+        {/* Live moving locations (e.g., shuttles/crowd) */}
+        {Array.isArray(liveLocations) &&
+          liveLocations.map((loc) => (
+            <Marker
+              key={loc.id}
+              position={loc.position}
+              icon={L.divIcon({
+                className: "live-location-icon",
+                html: `<div style="width:22px;height:22px;display:flex;align-items:center;justify-content:center;animation:pulse 1s infinite alternate"><svg width='18' height='18' viewBox='0 0 24 24'><circle cx='12' cy='12' r='8' fill='#f97316' stroke='#fff' stroke-width='2'/></svg></div>`,
+              })}
+            >
+              <Tooltip direction="top" offset={[0, -12]}>
+                Live: {loc.name}
+              </Tooltip>
+            </Marker>
+          ))}
 
         {/* Floating glassy control panel */}
         <div

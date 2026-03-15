@@ -1,41 +1,75 @@
 import { BookOpen, Monitor, UtensilsCrossed, Dumbbell, Building2, Theater, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
-const facilities = [
-  { icon: BookOpen, name: "Library", desc: "Central library with 50,000+ books and digital resources", color: "text-primary" },
-  { icon: Monitor, name: "Computer Labs", desc: "State-of-the-art labs with high-speed internet", color: "text-campus-green" },
-  { icon: UtensilsCrossed, name: "Cafeteria", desc: "Multiple food courts and dining options across campus", color: "text-campus-yellow" },
-  { icon: Dumbbell, name: "Sports Complex", desc: "Olympic-size pool, gym, and indoor sports facilities", color: "text-campus-red" },
-  { icon: Building2, name: "Admin Block", desc: "Registrar, admissions, and administrative offices", color: "text-muted-foreground" },
-  { icon: Theater, name: "Auditorium", desc: "Shanti Devi Mittal Auditorium for events and seminars", color: "text-primary" },
-];
+type FacilityIconKey = "library" | "labs" | "cafeteria" | "sports" | "admin" | "auditorium";
 
-const Facilities = () => (
-  <main className="min-h-screen px-4 py-8 sm:py-12">
-    <div className="max-w-5xl mx-auto">
-      <h1 className="text-2xl font-bold text-foreground mb-1">Campus Facilities</h1>
-      <p className="text-sm text-muted-foreground mb-8">Explore everything LPU campus has to offer</p>
+const iconMap: Record<FacilityIconKey, React.ComponentType<{ size?: number }>> = {
+  library: BookOpen,
+  labs: Monitor,
+  cafeteria: UtensilsCrossed,
+  sports: Dumbbell,
+  admin: Building2,
+  auditorium: Theater,
+};
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-        {facilities.map((f) => (
-          <div key={f.name} className="glass-card p-5 hover-lift group cursor-pointer">
-            <div className={`mb-3 ${f.color}`}>
-              <f.icon size={28} />
-            </div>
-            <h3 className="text-base font-semibold text-foreground mb-1">{f.name}</h3>
-            <p className="text-xs text-muted-foreground mb-4 leading-relaxed">{f.desc}</p>
-            <Link
-              to="/map"
-              className="inline-flex items-center gap-1.5 text-xs font-medium text-primary hover:underline"
-            >
-              <MapPin size={12} />
-              View on Map
-            </Link>
+const Facilities = () => {
+  const [facilities, setFacilities] = useState<Array<{ id?: number; name: string; description: string; icon?: FacilityIconKey }>>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    setLoading(true);
+    fetch("http://localhost:4000/api/facilities")
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to load facilities");
+        return res.json();
+      })
+      .then((data) => {
+        setFacilities(data || []);
+        setLoading(false);
+      })
+      .catch(() => {
+        setError("Could not load facilities");
+        setLoading(false);
+      });
+  }, []);
+
+  return (
+    <main className="min-h-screen px-4 py-8 sm:py-12">
+      <div className="max-w-5xl mx-auto">
+        <h1 className="text-2xl font-bold text-foreground mb-1">Campus Facilities</h1>
+        <p className="text-sm text-muted-foreground mb-8">Explore everything LPU campus has to offer</p>
+
+        {loading && <p className="text-sm text-muted-foreground">Loading facilities...</p>}
+        {error && !loading && <p className="text-sm text-red-500">{error}</p>}
+
+        {!loading && !error && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {facilities.map((f) => {
+              const Icon = (f.icon && iconMap[f.icon]) || BookOpen;
+              return (
+                <div key={f.id ?? f.name} className="glass-card p-5 hover-lift group cursor-pointer">
+                  <div className="mb-3 text-primary">
+                    <Icon size={28} />
+                  </div>
+                  <h3 className="text-base font-semibold text-foreground mb-1">{f.name}</h3>
+                  <p className="text-xs text-muted-foreground mb-4 leading-relaxed">{f.description}</p>
+                  <Link
+                    to="/map"
+                    className="inline-flex items-center gap-1.5 text-xs font-medium text-primary hover:underline"
+                  >
+                    <MapPin size={12} />
+                    View on Map
+                  </Link>
+                </div>
+              );
+            })}
           </div>
-        ))}
+        )}
       </div>
-    </div>
-  </main>
-);
+    </main>
+  );
+};
 
 export default Facilities;
