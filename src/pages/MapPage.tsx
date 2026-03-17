@@ -42,7 +42,7 @@ const MapPage = () => {
   // Fetch campus locations from backend
   React.useEffect(() => {
     setLoading(true);
-    fetch("http://localhost:4000/api/locations")
+    fetch("https://7bd256a9-2bcd-4a13-b382-62f52e7279ed.up.railway.app/api/locations")
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch locations");
         return res.json();
@@ -61,7 +61,7 @@ const MapPage = () => {
   React.useEffect(() => {
     let intervalId: number | undefined;
     const fetchLive = () => {
-      fetch("http://localhost:4000/api/live-locations")
+      fetch("https://7bd256a9-2bcd-4a13-b382-62f52e7279ed.up.railway.app/api/live-locations")
         .then((res) => {
           if (!res.ok) throw new Error("Failed to fetch live locations");
           return res.json();

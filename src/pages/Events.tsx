@@ -17,7 +17,7 @@ const Events = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch("http://localhost:4000/api/events")
+    fetch("https://7bd256a9-2bcd-4a13-b382-62f52e7279ed.up.railway.app/api/events")
       .then((res) => {
         if (!res.ok) throw new Error("Failed to load events");
         return res.json();

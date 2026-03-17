@@ -20,7 +20,7 @@ const Facilities = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch("http://localhost:4000/api/facilities")
+    fetch("https://7bd256a9-2bcd-4a13-b382-62f52e7279ed.up.railway.app/api/facilities")
       .then((res) => {
         if (!res.ok) throw new Error("Failed to load facilities");
         return res.json();

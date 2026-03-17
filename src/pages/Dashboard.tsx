@@ -30,11 +30,11 @@ const Dashboard = () => {
       try {
         setLoading(true);
         const [userRes, notifRes, annRes, eventsRes, messagesRes] = await Promise.all([
-          fetch("http://localhost:4000/api/user"),
-          fetch("http://localhost:4000/api/notifications"),
-          fetch("http://localhost:4000/api/announcements"),
-          fetch("http://localhost:4000/api/events"),
-          fetch("http://localhost:4000/api/messages"),
+          fetch("https://7bd256a9-2bcd-4a13-b382-62f52e7279ed.up.railway.app/api/user"),
+          fetch("https://7bd256a9-2bcd-4a13-b382-62f52e7279ed.up.railway.app/api/notifications"),
+          fetch("https://7bd256a9-2bcd-4a13-b382-62f52e7279ed.up.railway.app/api/announcements"),
+          fetch("https://7bd256a9-2bcd-4a13-b382-62f52e7279ed.up.railway.app/api/events"),
+          fetch("https://7bd256a9-2bcd-4a13-b382-62f52e7279ed.up.railway.app/api/messages"),
         ]);
 
         if (!userRes.ok || !notifRes.ok || !annRes.ok || !eventsRes.ok || !messagesRes.ok) {

@@ -20,7 +20,7 @@ const UserProfile = () => {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:4000/api/user")
+    fetch("https://7bd256a9-2bcd-4a13-b382-62f52e7279ed.up.railway.app/api/user")
       .then((res) => {
         if (!res.ok) throw new Error("Failed to fetch user data");
         return res.json();
