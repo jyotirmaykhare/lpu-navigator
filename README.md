@@ -1,73 +1,157 @@
-# Welcome to your Lovable project
+[LPU Navigator]
 
-## Project info
+A comprehensive campus navigation and information platform for LPU, featuring interactive maps, AR/3D campus views, smart suggestions, chatbot, notifications, events, user profiles, and more.
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+---
 
-## How can I edit this code?
+## Project Structure
 
-There are several ways of editing your application.
+```
+lpu-navigator/
+├── public/                # Static assets (index.html, robots.txt)
+├── server/                # Express backend (index.js, package.json)
+├── src/                   # Main frontend source
+│   ├── App.tsx            # App entry, routing, theme
+│   ├── main.tsx           # Vite entry point
+│   ├── components/        # UI & feature components
+│   │   ├── ARCampus3D.tsx # 3D/AR campus view (placeholder)
+│   │   ├── CampusMap.tsx  # Leaflet map integration
+│   │   ├── Chatbot.tsx    # Chatbot UI
+│   │   ├── GoogleMap.tsx  # (removed)
+│   │   ├── MapCluster.tsx # Map clustering
+│   │   ├── Navbar.tsx     # Navigation bar
+│   │   ├── NavLink.tsx    # Navigation link
+│   │   ├── SmartSuggestions.tsx # Suggestions
+│   │   └── ui/            # shadcn-ui components
+│   ├── data/              # Static/location data
+│   ├── hooks/             # Custom hooks
+│   ├── lib/               # Utility functions
+│   ├── pages/             # Route pages (Index, MapPage, Facilities, Events, etc.)
+│   └── test/              # Tests (example.test.ts, setup.ts)
+├── vite.config.ts         # Vite config
+├── tailwind.config.ts     # Tailwind config
+├── eslint.config.js       # ESLint config
+├── tsconfig*.json         # TypeScript configs
+├── package.json           # Frontend dependencies/scripts
+├── README.md              # Project documentation
+└── ...                    # Other configs and docs
+```
 
-**Use Lovable**
+---
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+## Technologies Used
 
-Changes made via Lovable will be committed automatically to this repo.
+### Frontend
+- **React** (18.3.1)
+- **TypeScript** (5.8.3)
+- **Vite** (5.4.19)
+- **Tailwind CSS** (3.4.17)
+- **shadcn-ui** (Radix UI components)
+- **react-leaflet** (maps)
+- **leaflet-routing-machine** (routing)
+- **@tanstack/react-query** (data fetching)
+- **react-router-dom** (routing)
+- **recharts** (charts)
+- **lucide-react** (icons)
+- **date-fns** (date utils)
+- **cmdk** (command palette)
+- **zod** (validation)
+- **sonner** (notifications)
+- **vaul** (UI)
+- **embla-carousel-react** (carousel)
+- **next-themes** (theme switching)
+- **class-variance-authority**, **clsx** (class utilities)
+- **input-otp** (OTP input)
 
-**Use your preferred IDE**
+### Backend
+- **Express** (4.18.2)
+- **CORS** (2.8.5)
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### Dev & Testing
+- **Vitest** (unit tests)
+- **Playwright** (e2e tests)
+- **ESLint** (linting)
+- **Testing Library** (React/Jest DOM)
+- **TypeScript ESLint**
+- **lovable-tagger** (component tagging)
+- **PostCSS**
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+---
 
-Follow these steps:
+## Features
+- Interactive campus map with routing and clustering
+- 3D/AR campus view (placeholder for future integration)
+- Smart suggestions for navigation and campus info
+- Chatbot for student queries
+- Notifications, events, and user profile management
+- Facilities info and issue reporting
+- Responsive UI with dark mode
 
+---
+
+## Getting Started
+
+### Prerequisites
+- Node.js (recommend using [nvm](https://github.com/nvm-sh/nvm#installing-and-updating))
+
+### Install & Run
 ```sh
-# Step 1: Clone the repository using the project's Git URL.
+# Clone the repository
 git clone <YOUR_GIT_URL>
+cd lpu-navigator
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# Install dependencies
+npm install
 
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+### Backend
+```sh
+cd server
+npm install
+npm start
+```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Build
+```sh
+npm run build
+```
 
-**Use GitHub Codespaces**
+### Preview
+```sh
+npm run preview
+```
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Lint
+```sh
+npm run lint
+```
 
-## What technologies are used for this project?
+### Test
+```sh
+npm run test
+```
 
-This project is built with:
+---
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Deployment
+- Deploy frontend with Vite/React (compatible with Vercel, Netlify, Railway, etc.)
+- Backend (Express) can be deployed separately (Railway, Heroku, etc.)
 
-## How can I deploy this project?
+---
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+## Custom Domain
+- Supported via platform settings (see docs)
 
-## Can I connect a custom domain to my Lovable project?
+---
 
-Yes, you can!
+## License
+This project is for educational purposes at LPU.
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+---
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+## Credits
+- Built with React, Vite, Tailwind, shadcn-ui, and more.
+- See package.json and server/package.json for full dependency list.
