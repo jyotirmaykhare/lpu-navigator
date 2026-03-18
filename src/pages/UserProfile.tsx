@@ -35,13 +35,7 @@ const UserProfile = () => {
       });
   }, []);
 
-  if (loading) {
-    return (
-      <div className="max-w-3xl mx-auto py-16 px-4 text-center">
-        <p className="text-sm text-muted-foreground">Loading profile...</p>
-      </div>
-    );
-  }
+  // Loading indicator removed
 
   if (error || !user) {
     return (

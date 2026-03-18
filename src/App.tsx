@@ -1,3 +1,6 @@
+// INTENTIONAL CHANGE: This line was added to test git commit and push functionality.
+// [SYNC TEST] This comment was added to verify commit and push functionality on 2026-03-17
+// Project synced and API paths updated to Railway backend
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -10,7 +13,6 @@ import MapPage from "./pages/MapPage";
 import Facilities from "./pages/Facilities";
 import NotFound from "./pages/NotFound";
 import Notifications from "./pages/Notifications";
-import Issues from "./pages/Issues";
 import Events from "./pages/Events";
 import Dashboard from "./pages/Dashboard";
 import UserProfile from "./pages/UserProfile";
@@ -41,7 +43,6 @@ const App = () => {
             <Route path="/facilities" element={<Facilities />} />
             <Route path="/events" element={<Events />} />
             <Route path="/notifications" element={<Notifications />} />
-            <Route path="/issues" element={<Issues />} />
             <Route path="/social" element={<Dashboard />} />
             <Route path="/profile" element={<UserProfile />} />
             <Route path="*" element={<NotFound />} />

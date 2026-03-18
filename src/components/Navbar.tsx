@@ -15,7 +15,6 @@ const navLinks = [
   { to: "/events", label: "Events" },
   { to: "/profile", label: "Profile" },
   { to: "/notifications", label: "Notifications" },
-  { to: "/issues", label: "Issues" },
 ];
 
 const Navbar = ({ darkMode, toggleDarkMode }: NavbarProps) => {

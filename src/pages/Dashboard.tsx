@@ -29,12 +29,12 @@ const Dashboard = () => {
     const fetchAll = async () => {
       try {
         setLoading(true);
-        const [userRes, notifRes, annRes, eventsRes, messagesRes] = await Promise.all([
-          fetch("https://7bd256a9-2bcd-4a13-b382-62f52e7279ed.up.railway.app/api/user"),
-          fetch("https://7bd256a9-2bcd-4a13-b382-62f52e7279ed.up.railway.app/api/notifications"),
-          fetch("https://7bd256a9-2bcd-4a13-b382-62f52e7279ed.up.railway.app/api/announcements"),
-          fetch("https://7bd256a9-2bcd-4a13-b382-62f52e7279ed.up.railway.app/api/events"),
-          fetch("https://7bd256a9-2bcd-4a13-b382-62f52e7279ed.up.railway.app/api/messages"),
+          const [userRes, notifRes, annRes, eventsRes, messagesRes] = await Promise.all([
+            fetch("https://7bd256a9-2bcd-4a13-b382-62f52e7279ed.up.railway.app/api/user"),
+            fetch("https://7bd256a9-2bcd-4a13-b382-62f52e7279ed.up.railway.app/api/notifications"),
+            fetch("https://7bd256a9-2bcd-4a13-b382-62f52e7279ed.up.railway.app/api/announcements"),
+            fetch("https://7bd256a9-2bcd-4a13-b382-62f52e7279ed.up.railway.app/api/events"),
+            fetch("https://7bd256a9-2bcd-4a13-b382-62f52e7279ed.up.railway.app/api/messages"),
         ]);
 
         if (!userRes.ok || !notifRes.ok || !annRes.ok || !eventsRes.ok || !messagesRes.ok) {
@@ -75,7 +75,7 @@ const Dashboard = () => {
         </div>
       </header>
 
-      {loading && <p className="text-sm text-muted-foreground">Loading dashboard...</p>}
+      {/* Loading indicator removed */}
       {error && !loading && <p className="text-sm text-red-500">{error}</p>}
 
       {!loading && !error && (
